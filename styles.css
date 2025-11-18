@@ -1,0 +1,17 @@
+.token-info {
+  margin-bottom: 15px;
+  padding: 10px;
+  background: #f0fdf4;
+  border-radius: 6px;
+  border-left: 4px solid #22c55e;
+}
+
+.token-preview {
+  padding: 8px;
+  background: #dcfce7;
+  border-radius: 4px;
+  font-family: "Courier New", monospace;
+  font-size: 11px;
+  color: #166534;
+  word-break: break-all;
+}

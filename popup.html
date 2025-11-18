@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="container">
+      <h3>SERVANT Handover Generator</h3>
+
+      <div class="info-section">
+        <p>
+          Buka halaman <strong>SERVANT</strong>, buka tab
+          <strong>Network</strong> di Developer Tools, lalu refresh atau
+          navigasi. Setelah itu klik tombol di bawah:
+        </p>
+      </div>
+
+      <div class="action-section">
+        <button id="captureToken" class="btn-primary">
+          📡 Ambil Token dari Network
+        </button>
+        <button id="generateHandover" class="btn-primary">
+          🚀 Generate Handover
+        </button>
+        <button id="manualFetch" class="btn-secondary">
+          ⚙️ Manual Input Token
+        </button>
+        <button id="copyResult" class="btn-secondary">
+          📋 Salin ke Clipboard
+        </button>
+        <button id="downloadFile" class="btn-secondary">
+          💾 Download File
+        </button>
+      </div>
+
+      <div class="token-section" id="manualSection" style="display: none">
+        <label for="authToken">Auth Token Manual:</label>
+        <input
+          type="text"
+          id="authToken"
+          placeholder="Masukkan auth token manual"
+        />
+        <button id="saveToken">Simpan Token</button>
+      </div>
+
+      <div class="token-info" id="tokenInfo" style="display: none">
+        <label>Token yang Terdeteksi:</label>
+        <div class="token-preview" id="tokenPreview"></div>
+        <small>Token ini akan digunakan untuk generate handover</small>
+      </div>
+
+      <div class="status" id="status"></div>
+
+      <div class="result-section">
+        <label>Preview Hasil:</label>
+        <textarea
+          id="result"
+          readonly
+          placeholder="Hasil handover akan muncul di sini..."
+        ></textarea>
+      </div>
+
+      <div class="info-section">
+        <small
+          >Bearer Token sudah terkonfigurasi. Auth Token akan diambil otomatis
+          dari network requests.</small
+        >
+      </div>
+    </div>
+    <script src="popup.js"></script>
+  </body>
+</html>
