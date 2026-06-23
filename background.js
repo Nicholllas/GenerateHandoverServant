@@ -1,34 +1,35 @@
-let capturedAuthToken = null;
+const TARGET_HOST = "https://servant-tms.ilcs.co.id/*";
 
-chrome.webRequest.onSendHeaders.addListener(
-  (details) => {
-    if (details.url.includes("servant-be.ilcs.co.id")) {
-      // Cari header Auth-Token
-      const authHeader = details.requestHeaders?.find(
-        (header) => header.name.toLowerCase() === "auth-token"
-      );
+chrome.webRequest.onBeforeSendHeaders.addListener(
+  async function (details) {
+    const headers = details.requestHeaders || [];
 
-      if (authHeader && authHeader.value) {
-        capturedAuthToken = authHeader.value;
-        console.log("Auth Token captured from network:", capturedAuthToken);
+    const authorizationHeader = headers.find(
+      (h) => h.name.toLowerCase() === "authorization",
+    );
 
-        // Simpan ke storage
-        chrome.storage.local.set({ authToken: capturedAuthToken });
-      }
+    const apiKeyHeader = headers.find(
+      (h) => h.name.toLowerCase() === "x-api-key",
+    );
+
+    if (authorizationHeader?.value || apiKeyHeader?.value) {
+      const current = await chrome.storage.local.get([
+        "authorization",
+        "xApiKey",
+      ]);
+
+      await chrome.storage.local.set({
+        authorization:
+          authorizationHeader?.value || current.authorization || "",
+        xApiKey: apiKeyHeader?.value || current.xApiKey || "",
+        lastCapturedAt: new Date().toISOString(),
+      });
+
+      console.log("Header SERVANT berhasil dicapture");
     }
   },
-  { urls: ["https://servant-be.ilcs.co.id/*"] },
-  ["requestHeaders"]
+  {
+    urls: [TARGET_HOST],
+  },
+  ["requestHeaders", "extraHeaders"],
 );
-
-// Listen untuk messages dari popup
-chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
-  if (request.action === "getCapturedToken") {
-    sendResponse({ token: capturedAuthToken });
-  }
-
-  if (request.action === "clearToken") {
-    capturedAuthToken = null;
-    sendResponse({ success: true });
-  }
-});

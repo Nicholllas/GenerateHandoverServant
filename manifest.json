@@ -1,28 +1,23 @@
 {
   "manifest_version": 3,
-  "name": "ILCS Handover Generator",
-  "version": "1.0",
-  "description": "Generate handover report from ILCS API",
-  "permissions": [
-    "activeTab",
-    "storage",
-    "clipboardWrite",
-    "scripting",
-    "webRequest"
-  ],
-  "host_permissions": [
-    "https://servant-be.ilcs.co.id/*",
-    "https://*.ilcs.co.id/*"
-  ],
-  "action": {
-    "default_popup": "popup.html",
-    "default_title": "ILCS Handover"
-  },
+  "name": "Tarik Tiket TMS Handover",
+  "version": "1.0.0",
+  "description": "Tarik tiket TMS dan generate format handover otomatis.",
+  "permissions": ["storage", "webRequest", "tabs", "activeTab"],
+  "host_permissions": ["https://servant-tms.ilcs.co.id/*"],
   "background": {
     "service_worker": "background.js"
   },
+  "action": {
+    "default_title": "Tarik Tiket TMS",
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "48": "icons/icon48.png"
+    }
+  },
   "icons": {
-    "16": "icon16.png",
-    "48": "icon48.png"
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png"
   }
 }
